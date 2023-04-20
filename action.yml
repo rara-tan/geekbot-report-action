@@ -1,0 +1,28 @@
+name: 'Geekbot Slack Sync'
+description: 'Notify Geekbot Weekly Report to Slack'
+inputs:
+  geekbot_api_key:
+    description: 'Geekbot API Key'
+    required: true
+  slack_bot_token:
+    description: 'Slack Bot Token'
+    required: true
+  slack_channel_name:
+    description: 'Slack Channel Name'
+    required: true
+  sync_period:
+    description: 'How many days to sync'
+    required: true
+    default: 7
+  question_ids:
+    description: 'Geekbot Question Ids'
+    required: true
+  standup_id:
+    description: 'Geekbot Stabdup Id'
+    required: true
+  member_ids:
+    description: 'Geekbot Member Ids'
+    required: true
+runs:
+  using: 'node16'
+  main: 'dist/index.js'
