@@ -1,4 +1,4 @@
-import fetch from 'node-fetch';
+// import fetch from 'node-fetch';
 import { GeekbotReportContents, GeekbotReport } from './interfaces/geekbot';
 
 export async function getReport({
