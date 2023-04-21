@@ -1,8 +1,14 @@
 import { sendToSlack } from '../src/sendToSlack';
 import { SlackMessage } from '../src/interfaces/slack';
 import fetch, { FetchMock } from 'jest-fetch-mock';
+import * as core from '@actions/core';
 
 const mockedFetch = global.fetch as FetchMock;
+
+jest.mock('@actions/core', () => ({
+  ...jest.requireActual('@actions/core'),
+  error: jest.fn(),
+}));
 
 describe('sendToSlack', () => {
   afterEach(() => {
