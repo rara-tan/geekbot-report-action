@@ -6816,6 +6816,45 @@ exports.slackMessages = slackMessages;
 
 /***/ }),
 
+/***/ 8462:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.validateInputs = void 0;
+const core = __nccwpck_require__(2186);
+function validateInputs(questionIds, standupId, memberIds, geekbotApiKey, slackBotToken, slackChannelName) {
+    if (questionIds.length === 0) {
+        core.setFailed('question_ids cannot be empty');
+        return;
+    }
+    if (!standupId) {
+        core.setFailed('standup_id cannot be empty');
+        return;
+    }
+    if (memberIds.length === 0) {
+        core.setFailed('member_ids cannot be empty');
+        return;
+    }
+    if (!geekbotApiKey) {
+        core.setFailed('geekbot_api_key cannot be empty');
+        return;
+    }
+    if (!slackBotToken) {
+        core.setFailed('slack_bot_token cannot be empty');
+        return;
+    }
+    if (!slackChannelName) {
+        core.setFailed('slack_channel_name cannot be empty');
+        return;
+    }
+}
+exports.validateInputs = validateInputs;
+
+
+/***/ }),
+
 /***/ 2877:
 /***/ ((module) => {
 
@@ -6999,6 +7038,7 @@ var exports = __webpack_exports__;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __nccwpck_require__(2186);
 const getReport_1 = __nccwpck_require__(562);
+const validateInputs_1 = __nccwpck_require__(8462);
 const slackMessages_1 = __nccwpck_require__(3587);
 const sendToSlack_1 = __nccwpck_require__(7828);
 (async () => {
@@ -7009,6 +7049,7 @@ const sendToSlack_1 = __nccwpck_require__(7828);
     const slackBotToken = core.getInput('slack_bot_token');
     const slackChannelName = core.getInput('slack_channel_name');
     const syncPeriod = Number(core.getInput('sync_period'));
+    (0, validateInputs_1.validateInputs)(questionIds, standupId, memberIds, geekbotApiKey, slackBotToken, slackChannelName);
     const d = new Date();
     const dateAfter = Math.floor((d.getTime() - syncPeriod * 24 * 60 * 60 * 1000) / 1000);
     try {

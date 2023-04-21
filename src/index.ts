@@ -1,5 +1,6 @@
 import * as core from '@actions/core';
 import { getReport } from './getReport';
+import { validateInputs } from './validateInputs';
 import { slackMessages } from './slackMessages';
 import { sendToSlack } from './sendToSlack';
 
@@ -11,6 +12,7 @@ import { sendToSlack } from './sendToSlack';
   const slackBotToken = core.getInput('slack_bot_token');
   const slackChannelName = core.getInput('slack_channel_name');
   const syncPeriod = Number(core.getInput('sync_period'));
+  validateInputs(questionIds, standupId, memberIds, geekbotApiKey, slackBotToken, slackChannelName);
 
   const d: Date = new Date();
   const dateAfter: number = Math.floor((d.getTime() - syncPeriod * 24 * 60 * 60 * 1000) / 1000);
