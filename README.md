@@ -1,12 +1,12 @@
-# Geekbot Report Sync to Slack
-This repository is for GitHub Actions to notify Slack of the content posted on Geekbot.
-Specifically, it monitors activities performed on Geekbot and sends notifications to a Slack channel, aiming to facilitate communication and sharing within the team.
+# Geekbot Report Action
+The geekbot-report-action is a GitHub Actions action that sends a summary of the Geekbot Report to a designated Slack channel.
+By configuring various parameters, such as Standup ID, API Key, and Member ID, you can effortlessly send Geekbot Reports to your Slack channel.
 
 ## Example
 ```yaml
 steps:
-  - name: Geekbot Slack Sync
-    uses: rara-tan/geekbot-sync-to-slack@v1.0
+  - name: Geekbot Report Action
+    uses: rara-tan/geekbot-report-action@v1.0
     with:
       geekbot_api_key: "..."
       slack_bot_token: "..."
