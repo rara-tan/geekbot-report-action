@@ -11,7 +11,7 @@ describe('validateInputs', () => {
   });
 
   it('should not set failure when all inputs are provided', () => {
-    validateInputs(
+    const result = validateInputs(
       ['1', '2'],
       'standup_id_value',
       ['member1', 'member2'],
@@ -21,10 +21,11 @@ describe('validateInputs', () => {
     );
 
     expect(core.setFailed).not.toBeCalled();
+    expect(result).toBe(true);
   });
 
   it('should set failure when questionIds is empty', () => {
-    validateInputs(
+    const result = validateInputs(
       [],
       'standup_id_value',
       ['member1', 'member2'],
@@ -34,10 +35,11 @@ describe('validateInputs', () => {
     );
 
     expect(core.setFailed).toBeCalledWith('question_ids cannot be empty');
+    expect(result).toBe(false);
   });
 
   it('should set failure when standupId is empty', () => {
-    validateInputs(
+    const result = validateInputs(
       ['1', '2'],
       '',
       ['member1', 'member2'],
@@ -47,10 +49,11 @@ describe('validateInputs', () => {
     );
 
     expect(core.setFailed).toBeCalledWith('standup_id cannot be empty');
+    expect(result).toBe(false);
   });
 
   it('should set failure when memberIds is empty', () => {
-    validateInputs(
+    const result = validateInputs(
       ['1', '2'],
       'standup_id_value',
       [],
@@ -60,10 +63,11 @@ describe('validateInputs', () => {
     );
 
     expect(core.setFailed).toBeCalledWith('member_ids cannot be empty');
+    expect(result).toBe(false);
   });
 
   it('should set failure when geekbotApiKey is empty', () => {
-    validateInputs(
+    const result = validateInputs(
       ['1', '2'],
       'standup_id_value',
       ['member1', 'member2'],
@@ -73,10 +77,11 @@ describe('validateInputs', () => {
     );
 
     expect(core.setFailed).toBeCalledWith('geekbot_api_key cannot be empty');
+    expect(result).toBe(false);
   });
 
   it('should set failure when slackBotToken is empty', () => {
-    validateInputs(
+    const result = validateInputs(
       ['1', '2'],
       'standup_id_value',
       ['member1', 'member2'],
@@ -86,10 +91,11 @@ describe('validateInputs', () => {
     );
 
     expect(core.setFailed).toBeCalledWith('slack_bot_token cannot be empty');
+    expect(result).toBe(false);
   });
 
   it('should set failure when slackChannelName is empty', () => {
-    validateInputs(
+    const result = validateInputs(
       ['1', '2'],
       'standup_id_value',
       ['member1', 'member2'],
@@ -99,5 +105,6 @@ describe('validateInputs', () => {
     );
 
     expect(core.setFailed).toBeCalledWith('slack_channel_name cannot be empty');
+    expect(result).toBe(false);
   });
 });

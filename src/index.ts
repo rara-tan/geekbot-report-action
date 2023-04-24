@@ -13,12 +13,14 @@ import { sendToSlack } from './sendToSlack';
   const slackBotToken = core.getInput('slack_bot_token');
   const slackChannelName = core.getInput('slack_channel_name');
   const syncPeriod = Number(core.getInput('sync_period'));
+  if (!validateInputs(questionIds, standupId, memberIds, geekbotApiKey, slackBotToken, slackChannelName)) {
+    return;
+  }
 
   const d: Date = new Date();
   const dateAfter: number = Math.floor((d.getTime() - syncPeriod * 24 * 60 * 60 * 1000) / 1000);
 
   try {
-    validateInputs(questionIds, standupId, memberIds, geekbotApiKey, slackBotToken, slackChannelName);
     const results = await getReport({ memberIds, questionIds, standupId, dateAfter, geekbotApiKey });
     await sendToSlack({ slackBotToken, syncPeriod, slackChannelName, slackMessages: slackMessages(results) });
   } catch (error) {

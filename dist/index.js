@@ -6830,28 +6830,29 @@ const core = __nccwpck_require__(2186);
 function validateInputs(questionIds, standupId, memberIds, geekbotApiKey, slackBotToken, slackChannelName) {
     if (questionIds.length === 0) {
         core.setFailed('question_ids cannot be empty');
-        return;
+        return false;
     }
     if (!standupId) {
         core.setFailed('standup_id cannot be empty');
-        return;
+        return false;
     }
     if (memberIds.length === 0) {
         core.setFailed('member_ids cannot be empty');
-        return;
+        return false;
     }
     if (!geekbotApiKey) {
         core.setFailed('geekbot_api_key cannot be empty');
-        return;
+        return false;
     }
     if (!slackBotToken) {
         core.setFailed('slack_bot_token cannot be empty');
-        return;
+        return false;
     }
     if (!slackChannelName) {
         core.setFailed('slack_channel_name cannot be empty');
-        return;
+        return false;
     }
+    return true;
 }
 exports.validateInputs = validateInputs;
 
@@ -7053,10 +7054,12 @@ const sendToSlack_1 = __nccwpck_require__(7828);
     const slackBotToken = core.getInput('slack_bot_token');
     const slackChannelName = core.getInput('slack_channel_name');
     const syncPeriod = Number(core.getInput('sync_period'));
+    if (!(0, validateInputs_1.validateInputs)(questionIds, standupId, memberIds, geekbotApiKey, slackBotToken, slackChannelName)) {
+        return;
+    }
     const d = new Date();
     const dateAfter = Math.floor((d.getTime() - syncPeriod * 24 * 60 * 60 * 1000) / 1000);
     try {
-        (0, validateInputs_1.validateInputs)(questionIds, standupId, memberIds, geekbotApiKey, slackBotToken, slackChannelName);
         const results = await (0, getReport_1.getReport)({ memberIds, questionIds, standupId, dateAfter, geekbotApiKey });
         await (0, sendToSlack_1.sendToSlack)({ slackBotToken, syncPeriod, slackChannelName, slackMessages: (0, slackMessages_1.slackMessages)(results) });
     }

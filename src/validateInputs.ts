@@ -7,34 +7,37 @@ export function validateInputs(
   geekbotApiKey: string,
   slackBotToken: string,
   slackChannelName: string
-): void {
+): boolean {
   if (questionIds.length === 0) {
     core.setFailed('question_ids cannot be empty');
-    return;
+    return false;
   }
 
   if (!standupId) {
     core.setFailed('standup_id cannot be empty');
-    return;
+    return false;
   }
 
   if (memberIds.length === 0) {
     core.setFailed('member_ids cannot be empty');
-    return;
+    return false;
   }
 
   if (!geekbotApiKey) {
     core.setFailed('geekbot_api_key cannot be empty');
-    return;
+    return false;
   }
 
   if (!slackBotToken) {
     core.setFailed('slack_bot_token cannot be empty');
-    return;
+    return false;
   }
 
   if (!slackChannelName) {
     core.setFailed('slack_channel_name cannot be empty');
-    return;
+    return false;
   }
+
+  return true;
 }
+
