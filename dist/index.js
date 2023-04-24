@@ -7045,9 +7045,9 @@ const validateInputs_1 = __nccwpck_require__(8462);
 const slackMessages_1 = __nccwpck_require__(3587);
 const sendToSlack_1 = __nccwpck_require__(7828);
 (async () => {
-    const questionIds = core.getInput('question_ids').trim().split(',');
+    const questionIds = core.getInput('question_ids').trim().split(',').filter(id => id);
     const standupId = core.getInput('standup_id');
-    const memberIds = core.getInput('member_ids').trim().split(',');
+    const memberIds = core.getInput('member_ids').trim().split(',').filter(id => id);
     const geekbotApiKey = core.getInput('geekbot_api_key');
     const slackBotToken = core.getInput('slack_bot_token');
     const slackChannelName = core.getInput('slack_channel_name');
