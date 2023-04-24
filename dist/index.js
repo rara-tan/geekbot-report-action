@@ -7045,6 +7045,7 @@ const validateInputs_1 = __nccwpck_require__(8462);
 const slackMessages_1 = __nccwpck_require__(3587);
 const sendToSlack_1 = __nccwpck_require__(7828);
 (async () => {
+    // Get parameters from github actions
     const questionIds = core.getInput('question_ids').trim().split(',').filter(id => id);
     const standupId = core.getInput('standup_id');
     const memberIds = core.getInput('member_ids').trim().split(',').filter(id => id);
@@ -7052,10 +7053,10 @@ const sendToSlack_1 = __nccwpck_require__(7828);
     const slackBotToken = core.getInput('slack_bot_token');
     const slackChannelName = core.getInput('slack_channel_name');
     const syncPeriod = Number(core.getInput('sync_period'));
-    (0, validateInputs_1.validateInputs)(questionIds, standupId, memberIds, geekbotApiKey, slackBotToken, slackChannelName);
     const d = new Date();
     const dateAfter = Math.floor((d.getTime() - syncPeriod * 24 * 60 * 60 * 1000) / 1000);
     try {
+        (0, validateInputs_1.validateInputs)(questionIds, standupId, memberIds, geekbotApiKey, slackBotToken, slackChannelName);
         const results = await (0, getReport_1.getReport)({ memberIds, questionIds, standupId, dateAfter, geekbotApiKey });
         await (0, sendToSlack_1.sendToSlack)({ slackBotToken, syncPeriod, slackChannelName, slackMessages: (0, slackMessages_1.slackMessages)(results) });
     }
