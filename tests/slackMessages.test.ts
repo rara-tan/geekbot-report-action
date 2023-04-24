@@ -79,34 +79,29 @@ describe('slackMessages', () => {
     ];
 
     const messages: SlackMessage[] = slackMessages(geekbotReports);
+    expect(messages).toHaveLength(2);
 
-    messages.forEach((message, index) => {
-      if (message) {
-        switch (index) {
-          case 0:
-            expect(message.text).toBe('Failed to get Contents. Due to Error');
-            break;
-          case 1:
-            expect(message.text).toBe('No Contents');
-            break;
-          case 2:
-            expect(message.text).toBe('No Questions');
-            break;
-          case 3:
-            if (message.fields) {
-              expect(message.fields).toHaveLength(1);
-              expect(message.fields[0]!.title).toMatch(/【\d{4}\/\d{1,2}\/\d{1,2}】/);
-              expect(message.fields[0]!.value).toBe('answer sentence');
-              expect(message.fields[0]!.short).toBe(false);
-            } else {
-              throw new Error('message.fields is undefined');
-            }
-            break;
-          default:
-            throw new Error(`Unexpected index value: ${index}`);
-        }
+    const message1 = messages[0];
+
+    if (message1) {
+      expect(message1.text).toBe('Failed to get Contents. Due to Error');
+    }
+
+    const message2 = messages[1];
+
+    if (message2) {
+      expect(message2.text).toBeUndefined();
+      expect(message2.author_name).toBe('User Four');
+
+      if (message2.fields) {
+        expect(message2.fields).toHaveLength(1);
+        expect(message2.fields[0]!.title).toMatch(/【\d{4}\/\d{1,2}\/\d{1,2}】/);
+        expect(message2.fields[0]!.value).toBe('answer sentence');
+        expect(message2.fields[0]!.short).toBe(false);
+      } else {
+        throw new Error('message2.fields is undefined');
       }
-    });
+    }
   });
 });
 

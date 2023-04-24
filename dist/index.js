@@ -6774,7 +6774,7 @@ exports.sendToSlack = sendToSlack;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.slackMessages = void 0;
 function slackMessages(reportResults) {
-    return reportResults.map((report) => {
+    const messages = reportResults.map((report) => {
         const slackMessage = {
             mrkdwn_in: ['text'],
             color: Math.floor(Math.random() * 16777215).toString(16),
@@ -6810,6 +6810,9 @@ function slackMessages(reportResults) {
         });
         return slackMessage;
     });
+    // Filter out "No Contents" and "No Questions" elements (TODO)
+    const filteredMessages = messages.filter((message) => message.text !== 'No Contents' && message.text !== 'No Questions');
+    return filteredMessages;
 }
 exports.slackMessages = slackMessages;
 

@@ -2,7 +2,7 @@ import { GeekbotReport, GeekbotReportContents } from './interfaces/geekbot';
 import { SlackMessage } from './interfaces/slack';
 
 export function slackMessages(reportResults: GeekbotReport[]): SlackMessage[] {
-  return reportResults.map((report) => {
+  const messages = reportResults.map((report) => {
     const slackMessage: SlackMessage = {
       mrkdwn_in: ['text'],
       color: Math.floor(Math.random() * 16777215).toString(16), // random color
@@ -16,6 +16,7 @@ export function slackMessages(reportResults: GeekbotReport[]): SlackMessage[] {
     }
 
     const contents: GeekbotReportContents[] = report.result.contents;
+    
     // No Contents
     if (contents.length === 0) {
       slackMessage.text = `No Contents`;
@@ -27,7 +28,6 @@ export function slackMessages(reportResults: GeekbotReport[]): SlackMessage[] {
       (content) => content.questions.length > 0,
     );
     slackMessage.author_name = contents[0]?.member.realname ?? report.userId;
-
 
     if (answeredReports.length === 0) {
       slackMessage.text = `No Questions`;
@@ -46,4 +46,12 @@ export function slackMessages(reportResults: GeekbotReport[]): SlackMessage[] {
     });
     return slackMessage;
   });
+
+  // Filter out "No Contents" and "No Questions" elements (TODO)
+  const filteredMessages = messages.filter(
+    (message) => message.text !== 'No Contents' && message.text !== 'No Questions'
+  );
+
+  return filteredMessages;
 }
+
